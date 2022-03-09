@@ -2,7 +2,9 @@
 # model 0 i 2, wariant b
 
 import numpy
+from matplotlib import pyplot as plt
 
+eps = 1
 
 def horner(tabl, n, x):                 #
     result = tabl[0]                    #
@@ -10,25 +12,26 @@ def horner(tabl, n, x):                 #
         result = result * x + tabl[i]   #
     return result                       #
 
+
 def fun1(x):
-    wartosc = x**3 - x**2 - 2*x + 1
-    return wartosc
+    return x**3 - x**2 - 2*x + 1
+
 
 def fun2(x):
-    wartosc = 2**x - 3*x
-    return wartosc
+    return 2**x - 3*x
+
 
 def fun3(x):
-    wartosc = x**3 - x + 1
-    return wartosc
+    return x**3 - x + 1
+
 
 def fun4(x):
-    wartosc = 2 + numpy.cos(2*x)
-    return wartosc
+    return 2 + numpy.cos(2*x)
+
 
 def fun5(x):
-    wartosc = numpy.sin(x) - numpy.cos(x)
-    return wartosc
+    return numpy.sin(x) - numpy.cos(x)
+
 
 def bisekcja(fun,pocz,kon,eps):
     p = pocz
@@ -50,6 +53,7 @@ def bisekcja(fun,pocz,kon,eps):
             k = srodek
     return srodek
 
+
 def sieczne(fun,pocz,kon,eps): #dokonczyc
     p = pocz
     k = kon
@@ -62,6 +66,7 @@ def sieczne(fun,pocz,kon,eps): #dokonczyc
         if i < kon:
             i = i + 1
     return #srodek
+
 
 def fun_wybor():
     funkcja = int
@@ -78,9 +83,10 @@ def fun_wybor():
         met_wybor(funkcja)
     return
 
+
 def met_wybor(fun):
     if fun < 1 or fun > 5:
-        print("Nieprawidlowa wartosc")
+        print("Nieprawidlowy wybor funkcji")
         fun_wybor()
     metoda = int
     try:
@@ -93,35 +99,58 @@ def met_wybor(fun):
         met_wybor(fun)
     return
 
-def menu(fun, metoda):
-    if fun == 1:
-        if metoda == 1:
-            bisekcja()
-        elif metoda == 2:
-            sieczne()
-    elif fun == 2:
-        if metoda == 1:
-            bisekcja()
-        elif metoda == 2:
-            sieczne()
-    elif fun == 3:
-        if metoda == 1:
-            bisekcja()
-        elif metoda == 2:
-            sieczne()
-    elif fun == 4:
-        if metoda == 1:
-            bisekcja()
-        elif metoda == 2:
-            sieczne()
-    elif fun == 5:
-        if metoda == 1:
-            bisekcja()
-        elif metoda == 2:
-            sieczne()
-    return
 
+def przedzial():
+    pocz = int
+    kon = int
+    try:
+        pocz = int(input("Podaj poczatek przedzialu:\n"
+                     ""))
+    except ValueError:
+        print("Wprowadzono nieodpowiedni znak")
+
+    try:
+        kon = int(input("Podaj koniec przedzialu:\n"
+                     ""))
+    except ValueError:
+        print("Wprowadzono nieodpowiedni znak")
+    if (pocz > kon):
+        print("Przedzial nieprawidlowo wprowadzony (poczatek przedzialu > koniec przedzialu)")
+        przedzial()
+    return pocz, kon
+
+
+def menu(fun, metoda):
+    if metoda < 1 or metoda > 2:
+        print("Nieprawidlowy wybor metody")
+        met_wybor(fun)
+    pocz, kon = przedzial()
+    if metoda == 1:
+        if fun == 1:
+            bisekcja(fun1(),pocz,kon,eps)
+        elif fun == 2:
+            bisekcja(fun2(),pocz,kon,eps)
+        elif fun == 3:
+            bisekcja(fun3(),pocz,kon,eps)
+        elif fun == 4:
+            bisekcja(fun4(),pocz,kon,eps)
+        elif fun == 5:
+            bisekcja(fun5(),pocz,kon,eps)
+    elif metoda == 2:
+        if fun == 1:
+            sieczne(fun1(),pocz,kon,eps)
+        elif fun == 2:
+            sieczne(fun2(),pocz,kon,eps)
+        elif fun == 3:
+            sieczne(fun3(),pocz,kon,eps)
+        elif fun == 4:
+            sieczne(fun4(),pocz,kon,eps)
+        elif fun == 5:
+            sieczne(fun5(),pocz,kon,eps)
+    return
 
 
 def main():
     fun_wybor()
+
+main()
