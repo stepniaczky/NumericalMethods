@@ -54,7 +54,7 @@ def bisekcja(fun, pocz, kon, eps):
     while abs(fun(i)) < eps:
         srodek = (p + k)/2
         if i < kon:
-            i = i + 1
+            i = i + + 0.1
         if abs(fun(srodek)) < fun_eps:
             return srodek
         if fun(p)*fun(srodek) > 0:
@@ -78,7 +78,7 @@ def sieczne(fun, pocz, kon, eps):
     while abs(fun(i)) < eps:
         pkt = (-1 * p * fun(p) * (k - p)) / (fun(k) - fun(p))  # pkt przeciecia siecznej z osia OX przez pocz i kon przedzialu
         if i < kon:
-            i = i + 1
+            i = i + 0.1
         if abs(fun(pkt)) < fun_eps:
             return pkt
         if fun(p)*fun(pkt) > 0:
@@ -92,7 +92,6 @@ def sieczne(fun, pocz, kon, eps):
 def bisekcja_iteracje(fun, pocz, kon, iter):
     p = pocz
     k = kon
-    i = pocz
     iteracje = 1
     fun_eps = 10e-10
     if fun(p)*fun(k) > 0:
@@ -100,8 +99,6 @@ def bisekcja_iteracje(fun, pocz, kon, iter):
         return
     while iteracje <= iter:
         srodek = (p + k)/2
-        if i < kon:
-            i = i + 1
         if abs(fun(srodek)) < fun_eps:
             return srodek
         if fun(p)*fun(srodek) > 0:
@@ -116,7 +113,6 @@ def bisekcja_iteracje(fun, pocz, kon, iter):
 def sieczne_iteracje(fun, pocz, kon, iter):
     p = pocz
     k = kon
-    i = pocz
     iteracje = 1
     fun_eps = 10e-10
     if fun(p)*fun(k) > 0:
@@ -124,8 +120,6 @@ def sieczne_iteracje(fun, pocz, kon, iter):
         return
     while iteracje <= iter:
         pkt = (-1 * p * fun(p) * (k - p)) / (fun(k) - fun(p))  # pkt przeciecia siecznej z osia OX przez pocz i kon przedzialu
-        if i < kon:
-            i = i + 1
         if abs(fun(pkt)) < fun_eps:
             return pkt
         if fun(p)*fun(pkt) > 0:
@@ -170,14 +164,14 @@ def met_wybor(fun):
 
 
 def przedzial():
-    pocz = int
-    kon = int
+    pocz = numpy.double
+    kon = numpy.double
     try:
-        pocz = int(input("Podaj poczatek przedzialu: "))
+        pocz = numpy.double(input("Podaj poczatek przedzialu: "))
     except ValueError:
         print("Wprowadzono nieodpowiedni znak.")
     try:
-        kon = int(input("Podaj koniec przedzialu: "))
+        kon = numpy.double(input("Podaj koniec przedzialu: "))
     except ValueError:
         print("Wprowadzono nieodpowiedni znak.")
     if pocz > kon:
@@ -232,26 +226,26 @@ def menu(fun, metoda):
         pocz, kon = przedzial()
         if metoda == 1:
             if fun == 1:
-                bisekcja_iteracje(fun1(), pocz, kon, iteracje)
+                bisekcja_iteracje(fun1(pocz), pocz, kon, iteracje)
             elif fun == 2:
-                bisekcja_iteracje(fun2(), pocz, kon, iteracje)
+                bisekcja_iteracje(fun2(pocz), pocz, kon, iteracje)
             elif fun == 3:
-                bisekcja_iteracje(fun3(), pocz, kon, iteracje)
+                bisekcja_iteracje(fun3(pocz), pocz, kon, iteracje)
             elif fun == 4:
-                bisekcja_iteracje(fun4(), pocz, kon, iteracje)
+                bisekcja_iteracje(fun4(pocz), pocz, kon, iteracje)
             elif fun == 5:
-                bisekcja_iteracje(fun5(), pocz, kon, iteracje)
+                bisekcja_iteracje(fun5(pocz), pocz, kon, iteracje)
         elif metoda == 2:
             if fun == 1:
-                sieczne_iteracje(fun1(), pocz, kon, iteracje)
+                sieczne_iteracje(fun1(pocz), pocz, kon, iteracje)
             elif fun == 2:
-                sieczne_iteracje(fun2(), pocz, kon, iteracje)
+                sieczne_iteracje(fun2(pocz), pocz, kon, iteracje)
             elif fun == 3:
-                sieczne_iteracje(fun3(), pocz, kon, iteracje)
+                sieczne_iteracje(fun3(pocz), pocz, kon, iteracje)
             elif fun == 4:
-                sieczne_iteracje(fun4(), pocz, kon, iteracje)
+                sieczne_iteracje(fun4(pocz), pocz, kon, iteracje)
             elif fun == 5:
-                sieczne_iteracje(fun5(), pocz, kon, iteracje)
+                sieczne_iteracje(fun5(pocz), pocz, kon, iteracje)
 
     elif warunek == 2:
         eps = numpy.double
@@ -262,26 +256,26 @@ def menu(fun, metoda):
         pocz, kon = przedzial()
         if metoda == 1:
             if fun == 1:
-                bisekcja(fun1(), pocz, kon, eps)
+                bisekcja(fun1(pocz), pocz, kon, eps)
             elif fun == 2:
-                bisekcja(fun2(), pocz, kon, eps)
+                bisekcja(fun2(pocz), pocz, kon, eps)
             elif fun == 3:
-                bisekcja(fun3(), pocz, kon, eps)
+                bisekcja(fun3(pocz), pocz, kon, eps)
             elif fun == 4:
-                bisekcja(fun4(), pocz, kon, eps)
+                bisekcja(fun4(pocz), pocz, kon, eps)
             elif fun == 5:
-                bisekcja(fun5(), pocz, kon, eps)
+                bisekcja(fun5(pocz), pocz, kon, eps)
         elif metoda == 2:
             if fun == 1:
-                sieczne(fun1(), pocz, kon, eps)
+                sieczne(fun1(pocz), pocz, kon, eps)
             elif fun == 2:
-                sieczne(fun2(), pocz, kon, eps)
+                sieczne(fun2(pocz), pocz, kon, eps)
             elif fun == 3:
-                sieczne(fun3(), pocz, kon, eps)
+                sieczne(fun3(pocz), pocz, kon, eps)
             elif fun == 4:
-                sieczne(fun4(), pocz, kon, eps)
+                sieczne(fun4(pocz), pocz, kon, eps)
             elif fun == 5:
-                sieczne(fun5(), pocz, kon, eps)
+                sieczne(fun5(pocz), pocz, kon, eps)
 
 
 def main():
