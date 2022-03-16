@@ -48,7 +48,7 @@ def bisekcja(funk, pocz, kon, eps):
     i = pocz
     iteracje = 1
     fun_eps = 10e-10
-    if funk(p)*funk(k) > 0:
+    if funk(p)*funk(k) < 0:
         print("Podany przedzial jest bledny!")
         return
     while abs(funk(i)) < eps:
@@ -73,7 +73,7 @@ def sieczne(funk, pocz, kon, eps):
     i = pocz
     iteracje = 1
     fun_eps = 10e-10
-    if funk(p)*funk(k) > 0:
+    if funk(p)*funk(k) < 0:
         print("Podany przedzial jest bledny!")
         return
     while abs(funk(i)) < eps:
@@ -92,15 +92,17 @@ def sieczne(funk, pocz, kon, eps):
     return pkt
 
 def bisekcja_iteracje(funk, pocz, kon, iter):
+    # print(funk, pocz, kon, iter)
     p = pocz
     k = kon
     iteracje = 1
     fun_eps = 10e-10
-    if funk(p) * funk(k) > 0:
+    if funk(p) * funk(k) < 0:
         print("Podany przedzial jest bledny!")
         return
     while iteracje <= iter:
         srodek = (p + k)/2
+        # print(srodek)
         if abs(funk(srodek)) < fun_eps:
             return srodek
         if funk(p)*funk(srodek) > 0:
@@ -118,7 +120,7 @@ def sieczne_iteracje(funk, pocz, kon, iter):
     k = kon
     iteracje = 1
     fun_eps = 10e-10
-    if funk(p)*funk(k) > 0:
+    if funk(p)*funk(k) < 0:
         print("Podany przedzial jest bledny!")
         return
     while iteracje <= iter:
@@ -152,6 +154,7 @@ def fun_wybor():
 
 
 def met_wybor(funk):
+    # print(funk)
     if funk < 1 or funk > 5:
         print("Nieprawidlowy wybor funkcji.")
         fun_wybor()
@@ -206,6 +209,7 @@ def przedzial():
 #     elif wybor == 2:
 
 def menu(funk, metoda):
+    # print(funk, metoda)
     if metoda < 1 or metoda > 2:
         print("Nieprawidlowy wybor metody.")
         met_wybor(funk)
@@ -228,6 +232,7 @@ def menu(funk, metoda):
         except ValueError:
             print("Wprowadzono nieodpowiedni znak.")
         pocz, kon = przedzial()
+        # print(pocz, kon)
         if metoda == 1:
             if funk == 1:
                 bisekcja_iteracje(fun1, pocz, kon, iteracje)
