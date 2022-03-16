@@ -30,8 +30,8 @@ def fun2(x):
 
 
 def fun3(x): #x^3 - x + 1
-    tabl = [1, -1, 1]
-    return horner(tabl, 3, x)
+    tabl = [1, 0, -1, 1]
+    return horner(tabl, 4, x)
 
 
 def fun4(x):
@@ -54,7 +54,7 @@ def bisekcja(funk, pocz, kon, eps):
     while abs(funk(i)) < eps:
         srodek = (p + k)/2
         if i < kon:
-            i = i + + 0.1
+            i = i + 0.1
         if abs(funk(srodek)) < fun_eps:
             return srodek
         if funk(p)*funk(srodek) > 0:
@@ -147,7 +147,7 @@ def fun_wybor():
                            "Wybor: "))
         met_wybor(funkcja)
     except ValueError:
-        met_wybor(funkcja)
+        fun_wybor()
     return
 
 
