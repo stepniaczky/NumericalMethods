@@ -10,7 +10,6 @@ def fun():
     for i, fn in enumerate(functions):
         print(str(i + 1) + ":", fn)
 
-
 def main():
     fn = int
     # Wybor funkcji
@@ -33,4 +32,9 @@ def main():
     print(x1, x2)
 
 
-main()
+# main()
+
+# user_input = input("Enter a command: ")
+# if user_input in locals():
+function = "fun1"
+locals()[f"{function}"]()
