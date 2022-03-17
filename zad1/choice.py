@@ -1,3 +1,5 @@
+from numpy import double
+
 def fun_choice():
     try:
         choice = int(input("Prosze wybrac funkcje z ponizszej listy:\n"
@@ -13,6 +15,7 @@ def fun_choice():
         print("Prosze wybrac funkcje z wyswietlonego zakresu!")
     except ValueError:
         print("Wprowadzono nieprawidlowa wartosc!")
+
     return fun_choice()
 
 
@@ -22,32 +25,36 @@ def met_choice():
                            "1. Metoda bisekcji,\n"
                            "2. Metoda sieczych.\n"
                            "Wybor: "))
-        if choice == 1 or 2:
+        if choice in [1, 2]:
             return choice
         print("Prosze wybrac metode z wyswietlonego zakresu!")
     except ValueError:
         print("Wprowadzono nieprawidlowa wartosc!")
+
     return met_choice()
 
 
 def przedzial():
-    pocz = 1
-    kon = 0
+    pocz, kon = 1, 0
+
     while pocz > kon:
         try:
-            pocz = float(input("Podaj poczatek przedzialu: "))
-            kon = float(input("Podaj koniec przedzialu: "))
+            pocz = double(input("Podaj poczatek przedzialu: "))
+            kon = double(input("Podaj koniec przedzialu: "))
             if pocz < kon:
                 return pocz, kon
             print("Przedzial nieprawidlowo wprowadzony "
                   "(poczatek przedzialu > koniec przedzialu).")
         except ValueError:
             print("Wprowadzono nieprawidlowa wartosc!")
+            pocz, kon = 1, 0
+
 
 
 def condition():
     cond = int
-    while cond != 1 and cond != 2:
+
+    while cond not in [1, 2]:
         try:
             cond = int(input("Algorytm ma zakonczyc sie gdy:\n"
                                 "1.Zostanie osiagnieta podana liczba iteracji,\n"
@@ -67,9 +74,9 @@ def condition():
 
     else:
         eps = 0
-        while eps <= eps:
+        while eps <= 0:
             try:
-                eps = float(input("Podaj wartosc eps: "))
+                eps = double(input("Podaj wartosc eps: "))
             except ValueError:
                 print("Wprowadzono nieprawidlowa wartosc!")
         return cond, eps
