@@ -1,3 +1,5 @@
+import numpy
+
 def fun1(x): #x^3 - x^2 - 2x + 1
     tabl = [1, -1, -2, 1]
     return horner(tabl, 4, x)
