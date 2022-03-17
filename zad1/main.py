@@ -17,7 +17,14 @@ func = locals()[f"fun{fn}"]
 met = met_choice()
 p, k = przedzial()
 cond, limiter = condition()
+
 if met == 1:
-    bisekcja(fun, p, k, cond, limiter)
+    x, i = bisekcja(func, p, k, cond, limiter)
 else:
-    sieczne(fun, p, k, cond, limiter)
+    x, i = sieczne(func, p, k, cond, limiter)
+
+if x != 'err':
+    print("Liczba wykonanych iteracji: ", i)
+    print("x: ", x)
+else:
+    print("Podany przedzial jest bledny!")
