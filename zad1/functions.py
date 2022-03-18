@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 def horner(tabl, n, x):                 #   tabl - tablica wspolczynnikow wielomianu
     wynik = tabl[0]                     #   n - dlugosc tablicy
@@ -21,8 +21,8 @@ def fun3(x): #x^3 - x + 1
 
 
 def fun4(x):
-    return 2 + numpy.cos(2*x)
+    return 2 + np.cos(2*x)
 
 
 def fun5(x):
-    return numpy.sin(x) - numpy.cos(x)
+    return np.sin(x) - np.cos(x)

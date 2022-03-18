@@ -11,6 +11,7 @@
 from choice import fun_choice, met_choice, przedzial, condition
 from algorithms import bisekcja, sieczne
 from functions import fun1, fun2, fun3, fun4, fun5
+from graphs import graph
 
 fn = fun_choice()
 func = locals()[f"fun{fn}"]
@@ -26,5 +27,6 @@ else:
 if x != 'err':
     print("Liczba wykonanych iteracji: ", i)
     print("x: ", x)
+    graph(func, p, k, x, met)
 else:
     print("Podany przedzial jest bledny!")
