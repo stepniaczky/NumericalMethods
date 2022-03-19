@@ -1,14 +1,12 @@
 from numpy import double
+from functions import arr_fn
 
 def fun_choice():
     try:
-        choice = int(input("Prosze wybrac funkcje z ponizszej listy:\n"
-                           "1. f(x) = x^3 - x^2 - 2x + 1,\n"
-                           "2. f(x) = 2^x - 3x,\n"
-                           "3. f(x) = x^3 - x + 1,\n"
-                           "4. f(x) = 2 + cos(2x),\n"
-                           "5. f(x) = sin(x) - cos(x).\n"
-                           "Wybor: "))
+        print("Prosze wybrac funkcje z ponizszej listy:")
+        for i in range(len(arr_fn)):
+            print(f'{i + 1}.', arr_fn[i])
+        choice = int(input("Wybor: "))
 
         if choice in [1, 2, 3, 4, 5]:
             return choice

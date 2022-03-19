@@ -1,5 +1,11 @@
 import numpy as np
 
+arr_fn = ["f(x) = x^3 - x^2 - 2x + 1",
+          "f(x) = 2^x - 3x",
+          "f(x) = x^3 - x + 1",
+          "f(x) = 2 + cos(2x)",
+          "f(x) = sin(x) - cos(x)"]
+
 def horner(tabl, n, x):                 #   tabl - tablica wspolczynnikow wielomianu
     wynik = tabl[0]                     #   n - dlugosc tablicy
     for i in range(1, n):               #   x - argument
