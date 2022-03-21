@@ -1,7 +1,8 @@
 from matplotlib import pyplot as plt
 
 
-def graph(func, p, k, wynik, met, fn_str):
+def graph(func, p, k, wynik, met):
+
     plt_precision = 0.01
     pocz = p
     fx = [0.0] * int((abs(p) + k) / plt_precision)
@@ -20,7 +21,10 @@ def graph(func, p, k, wynik, met, fn_str):
     else:
         name += "siecznych"
 
-    fig = plt.figure(dpi=500)
+    def cm_to_inch(value):
+        return value / 2.54
+
+    fig = plt.figure(dpi=500, figsize=(cm_to_inch(15),cm_to_inch(10)))
     ax = fig.add_subplot(1, 1, 1)
 
     ax.spines['left'].set_position('zero')
@@ -32,34 +36,26 @@ def graph(func, p, k, wynik, met, fn_str):
     ax.xaxis.set_ticks_position('bottom')
     ax.yaxis.set_ticks_position('left')
 
-    # ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
-    # ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
-
     ax.annotate('x', xy=(1, 0), xycoords=('axes fraction', 'data'),
-                xytext=(20, 0), textcoords='offset points',
-                ha='left', va='center',
-                arrowprops=dict(arrowstyle='<-', fc='black'))
+                xytext=(7, 0), textcoords='offset points',
+                ha='left', va='center')
 
-    # Y-axis arrow
     ax.annotate('y', xy=(0, 1), xycoords=('data', 'axes fraction'),
-                xytext=(0, 20), textcoords='offset points',
-                ha='center', va='bottom',
-                arrowprops=dict(arrowstyle='<-', fc='black'))
+                xytext=(0, 7), textcoords='offset points',
+                ha='center', va='bottom',)
 
-    plt.title(name, loc='left')
+    ax.text(x=wynik + 0.3, y=0.3, s=f"{round(wynik, 3)}...", fontsize=6)
 
-    # plt.text(k - 0.08, 0.25, 'x', fontsize=8)
-    # plt.text(0.25 * k, max_height - 0.08 * max_height, 'y', fontsize=8)
-
-    # plt.text(k - 0.1, -0.06, '\u25B6', fontsize=6)
-    # plt.text(0 - 0.07, max_height - 0.12, '\u25B2', fontsize=6)
-
-    # plt.grid(True)
     plt.xlim(p, k)
+    max3 = 3 * max(p, k)
+    if min_height < -1 * max3:
+        min_height = -1 * int(max3)
+    if max_height > max3:
+        max_height = int(max3)
     plt.ylim(min_height, max_height)
 
-    result = plt.scatter(wynik, func(wynik), color='red')
-    line, = plt.plot(fx, fy, color='blue')
-    plt.legend([line, result], [f'{fn_str}', f'{wynik}'], loc="upper left", fontsize=7)
+    plt.axis('scaled')
+    plt.scatter(wynik, func(wynik), color='red')
+    plt.plot(fx, fy, color='blue')
     plt.savefig(name + ".jpg", dpi=500)
     plt.show()
