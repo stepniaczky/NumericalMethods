@@ -3,7 +3,7 @@ import numpy as np
 arr_fn = ["f(x) = x^3 - x^2 - 2x + 1",
           "f(x) = 2^x - 3x",
           "f(x) = x^3 - x + 1",
-          "f(x) = 2 + cos(2x)",
+          "f(x) = tan(x) - 1",
           "f(x) = sin(x) - cos(x)"]
 
 def horner(tabl, n, x):                 #   tabl - tablica wspolczynnikow wielomianu
@@ -27,7 +27,7 @@ def fun3(x): #x^3 - x + 1
 
 
 def fun4(x):
-    return 2 + np.cos(2*x)
+    return np.tan(x) - 1
 
 
 def fun5(x):
