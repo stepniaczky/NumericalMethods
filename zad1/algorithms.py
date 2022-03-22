@@ -31,6 +31,8 @@ def bisekcja(f, p, k, cond, limiter):
 
 
 def sieczne(f, p, k, cond, limiter):
+    if (f(p) * f(k)) > 0:
+        return 'err', 'err'
 
     iter = 1
     while True:
