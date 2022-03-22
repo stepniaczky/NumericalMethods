@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 
 def graph(func, p, k, wynik, met):
 
-    plt_precision = 0.01
+    plt_precision = 0.0001
     pocz = p
     fx = [0.0] * int((abs(p) + k) / plt_precision)
     fy = [0.0] * int((abs(p) + k) / plt_precision)
@@ -12,8 +12,19 @@ def graph(func, p, k, wynik, met):
         fy[i] = func(pocz)
         pocz += plt_precision
 
+    min_ = min(abs(p), abs(k))
+
     min_height = min(fy) - 0.5
+    if abs(min(fy)) < min_:
+        min_height = -abs(min_)
+    elif abs(min(fy)) < 3 * min_:
+        min_height = 3 * min_
+
     max_height = max(fy) + 0.5
+    if max(fy) < min_:
+        max_height = min_
+    elif max(fy) > 3 * min_:
+        max_height = 3 * min_
 
     name = "Metoda "
     if met == 1:
@@ -21,10 +32,7 @@ def graph(func, p, k, wynik, met):
     else:
         name += "siecznych"
 
-    def cm_to_inch(value):
-        return value / 2.54
-
-    fig = plt.figure(dpi=500, figsize=(cm_to_inch(15),cm_to_inch(10)))
+    fig = plt.figure(dpi=500)
     ax = fig.add_subplot(1, 1, 1)
 
     ax.spines['left'].set_position('zero')
@@ -46,12 +54,16 @@ def graph(func, p, k, wynik, met):
 
     ax.text(x=wynik + 0.3, y=0.3, s=f"{round(wynik, 3)}...", fontsize=6)
 
+    if p > 0:
+        plt.xlim(-1, k)
+    if k < 0:
+        plt.xlim(p, 10)
     plt.xlim(p, k)
-    max3 = 3 * max(p, k)
-    if min_height < -1 * max3:
-        min_height = -1 * int(max3)
-    if max_height > max3:
-        max_height = int(max3)
+    # max3 = 3 * max(p, k)
+    # if min_height < -1 * max3:
+    #     min_height = -1 * int(max3)
+    # if max_height > max3:
+    #     max_height = int(max3)
     plt.ylim(min_height, max_height)
 
     plt.axis('scaled')
