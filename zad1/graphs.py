@@ -66,5 +66,5 @@ def graph(func, p, k, wynik, met):
     plt.axis('scaled')
     plt.scatter(wynik, func(wynik), color='red')
     plt.plot(fx, fy, color='blue')
-    plt.savefig(name + ".jpg", dpi=500)
+    plt.savefig("jpg/" + name + ".jpg", dpi=500)
     plt.show()
