@@ -16,8 +16,8 @@ def graph(func, p, k, wynik, met):
 
     min_height = min(fy) - 0.5
     if abs(min(fy)) < min_:
-        min_height = -abs(min_)
-    elif abs(min(fy)) < 3 * min_:
+        min_height = -1 * min_
+    elif abs(min(fy)) > 3 * min_:
         min_height = 3 * min_
 
     max_height = max(fy) + 0.5
@@ -52,18 +52,15 @@ def graph(func, p, k, wynik, met):
                 xytext=(0, 7), textcoords='offset points',
                 ha='center', va='bottom',)
 
-    ax.text(x=wynik + 0.3, y=0.3, s=f"{round(wynik, 3)}...", fontsize=6)
+    ax.text(x=wynik + 0.3, y=0.3, s=f"x = {round(wynik, 3)}...", fontsize=6)
 
     if p > 0:
-        plt.xlim(-1, k)
-    if k < 0:
-        plt.xlim(p, 10)
-    plt.xlim(p, k)
-    # max3 = 3 * max(p, k)
-    # if min_height < -1 * max3:
-    #     min_height = -1 * int(max3)
-    # if max_height > max3:
-    #     max_height = int(max3)
+        plt.xlim(0, k)
+    elif k < 0:
+        plt.xlim(p, 0)
+    else:
+        plt.xlim(p, k)
+
     plt.ylim(min_height, max_height)
 
     plt.axis('scaled')
