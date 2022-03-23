@@ -1,5 +1,9 @@
 **/.idea/
 **/__pycache__/
+
 **/*.jpg
 **/*.txt
 **/*.png
+
+# WYJATKI
+!zad2/equations/**
