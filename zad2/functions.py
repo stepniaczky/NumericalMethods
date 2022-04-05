@@ -28,17 +28,17 @@ def check_diagonal(A, b):
     for j in range(n):
         max_el, index = A[0][j], 0
         for i in range(1, n):
+
             if abs(A[i][j]) > abs(max_el):
                 max_el, index = A[i][j], i
+
         switch_rows(A, j, index)
         switch_rows(b, j, index)
-
-    return A, b
 
 
 def gaussian(A, b):
     n = len(A)
-    A, b = check_diagonal(A, b)
+    check_diagonal(A, b)
 
     for k in range(n - 1):
         for i in range(k + 1, n):
