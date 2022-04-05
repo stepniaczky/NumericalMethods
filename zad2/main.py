@@ -12,16 +12,9 @@ if __name__ == '__main__':
     match system_type:
         case "determinate":
             start = time.time_ns()
-            x, flag = gaussian(A, b)
+            x = gaussian(A, b)
             total = (time.time_ns() - start) / 1000000
             print(f"Czas pracy algorytmu eliminacji Gaussa: {total}ms\n")
-
-            if flag is True:
-                print(f"Macierz jest przekatniowo dominujaca!")
-            else:
-                print(f"Macierz nie jest przekatniowo dominujaca!")
-                print(f"(Uzyskane wyniki mogą byc bledne")
-
             print("Uklad rownan ma dokładnie jedno rozwiązanie:")
 
             result = ""

@@ -2,31 +2,10 @@ import numpy as np
 from numpy.linalg import matrix_rank
 
 
-def switch_rows(A, i, j):
-    n = A.shape[0]
-    E = np.eye(n)
-    E[i, i] = 0
-    E[j, j] = 0
-    E[i, j] = 1
-    E[j, i] = 1
-    return E @ A
-
-
-def scale_row(A, k, i):
-    n = A.shape[0]
-    E = np.eye(n)
-    E[i, i] = k
-    return E @ A
-
-
-def add_row(A, k, i, j):
-    n = A.shape[0]
-    E = np.eye(n)
-    if i == j:
-        E[i, i] = k + 1
-    else:
-        E[i, j] = k
-    return E @ A
+def switch_rows(M, i, j):
+    temp = M[i].copy()
+    M[i] = M[j]
+    M[j] = temp
 
 
 def check(A, b):
@@ -43,43 +22,35 @@ def check(A, b):
             return "indeterminate"
 
 
-def diagonally_dominant(A, b):
+def check_diagonal(A, b):
     n = len(A)
 
-    flag = True
     for j in range(n):
-        max_, row = A[0][j], 0
+        max_el, index = A[0][j], 0
         for i in range(1, n):
-            if abs(A[i][j]) > abs(max_):
-                max_, row = A[i][j], i
-        A = switch_rows(A, j, row)
-        b = switch_rows(b, j, row)
+            if abs(A[i][j]) > abs(max_el):
+                max_el, index = A[i][j], i
+        switch_rows(A, j, index)
+        switch_rows(b, j, index)
 
-    for j in range(n):
-        max_ = A[j][j]
-        for i in range(j + 1, n):
-            if abs(max_) == abs(A[i][j]):
-                flag = False  # macierz nie jest przekatniowo dominujaca
-
-    return A, b, flag
+    return A, b
 
 
 def gaussian(A, b):
     n = len(A)
-    flag = True
+    A, b = check_diagonal(A, b)
 
-    A, b, flag = diagonally_dominant(A, b)
+    for k in range(n - 1):
+        for i in range(k + 1, n):
 
-    n = len(b)
-    for k in range(n - 1):  # rows
-        for i in range(k + 1, n):  # columns
-
-            s = A[i, k] / A[k, k]
+            m = A[i, k] / A[k, k]
             for j in range(k, n):
-                A[i, j] -= s * A[k, j]
-            b[i] -= s * b[k]
+                A[i, j] -= m * A[k, j]
+            b[i] -= m * b[k]
 
-    for k in range(n - 1, -1, -1):  # rows
-        b[k] = (b[k] - np.dot(A[k, k + 1:n], b[k + 1:n])) / A[k, k]
+    x = np.zeros(n)
+    for k in range(n - 1, -1, -1):  # podstawianie w tyl
+        rest = A[k, k + 1:n] @ x[k + 1:n]
+        x[k] = (b[k] - rest) / A[k, k]
 
-    return b, flag
+    return x
