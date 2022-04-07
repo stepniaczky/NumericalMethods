@@ -1,4 +1,4 @@
-from numpy import double as np
+from numpy import double
 from functions import functions, human_readable_functions
 
 
@@ -8,8 +8,8 @@ def fun():
             print(f"{key}: {human_readable_functions[key]}")
         choice = int(input("Wybierz funkcje: "))
         if choice in functions.keys():
-            return choice
-        print("Prosze wybrac funkcje z wyswietlonego zakresu!")
+            return functions[choice]
+        print("Prosze wybrac funkcje z wyswietlonego zakresu:")
     except ValueError:
         print("Wprowadzono nieprawidlowa wartosc!")
 
@@ -18,8 +18,8 @@ def fun():
 
 def interval():
     try:
-        start = np.double(input("Podaj poczatek przedzialu: "))
-        end = np.double(input("Podaj koniec przedzialu: "))
+        start = double(input("Podaj poczatek przedzialu: "))
+        end = double(input("Podaj koniec przedzialu: "))
         if start < end:
             return start, end
         print("Przedzial nieprawidlowo wprowadzony "
