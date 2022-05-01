@@ -4,6 +4,7 @@
 
 import numpy as np
 import math
+from numpy import double
 
 
 def horner(arr, x):
@@ -48,17 +49,19 @@ def metoda():
         return metoda()
 
 
-def Gauss(funkcja, iloscWezlow):
+def Gauss(funkcja, iloscWezlow) -> double:
     wynik = 0
-    for i in range(iloscWezlow):
+    i = 1
+    while i <= iloscWezlow:
         aktualnaWaga = math.pi / iloscWezlow
         aktualnyWezel = -np.cos(((2 * i - 1) * math.pi) / (2 * iloscWezlow))
         wynik += aktualnaWaga * FX(funkcja, aktualnyWezel)
+        i += 1
     return wynik
 
 
 # calka wedlug wzoru Simpsona
-def calka(funkcja, poczatek, koniec, eps):
+def calka(funkcja, poczatek, koniec, eps) -> double:
     podprzedzial = 1
     delta = koniec - poczatek
     wynik = 0
@@ -75,14 +78,14 @@ def calka(funkcja, poczatek, koniec, eps):
             i += 1
         wynik *= dlugosc / 3
         if math.fabs(pom - wynik) > eps:
-            warunek = False
-        else:
             warunek = True
+        else:
+            warunek = False
     return wynik
 
 
 # obliczamy granice w celu wyliczenia calki Newtona-Cotesa
-def granica(funkcja, eps):
+def granica(funkcja, eps) -> double:
     wynik = 0
 
     # granica do +1
@@ -93,11 +96,11 @@ def granica(funkcja, eps):
         temp = calka(funkcja, poczatek, koniec, eps)
         wynik += temp
         poczatek = koniec
-        koniec = koniec + ((1 - koniec) * 1 / 2)
+        koniec = koniec + ((1 - koniec) * 0.5)  # 1 / 2
         if math.fabs(temp) > eps:
-            warunek = False
-        else:
             warunek = True
+        else:
+            warunek = False
 
     # granica do -1
     poczatek = -0.5
@@ -107,16 +110,15 @@ def granica(funkcja, eps):
         temp = calka(funkcja, poczatek, koniec, eps)
         wynik += temp
         koniec = poczatek
-        poczatek = poczatek - ((1 - math.fabs(koniec)) * 1 / 2)
+        poczatek = poczatek - ((1 - math.fabs(koniec)) * 0.5)  # 1 / 2
         if math.fabs(temp) > eps:
-            warunek = False
-        else:
             warunek = True
-
+        else:
+            warunek = False
     return wynik
 
 
-def FX(funkcja, x):
+def FX(funkcja, x) -> double:
     if funkcja == 1:
         return np.sin(x)
     elif funkcja == 2:
@@ -127,8 +129,8 @@ def FX(funkcja, x):
         return np.cos(x)
 
 
-def FXWX(funkcja, x):
-    return FX(funkcja, x) * (1 / np.sqrt(1 - x ** 2))
+def FXWX(funkcja, x) -> double:
+    return FX(funkcja, x) * (1 / np.sqrt(1 - x * x))
 
 
 def main():
