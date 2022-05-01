@@ -5,8 +5,6 @@
 import numpy as np
 import math
 
-PI = 3.141592653589793238462643383279502884
-
 
 def horner(arr, x):
     result = arr[0]
@@ -15,53 +13,106 @@ def horner(arr, x):
     return result
 
 
-def wybor_funkcji():
+def funkcjaa():
     try:
-        choice = int(input("Wybor: "))
-        if choice in [1, 2, 3, 4]:
-            return choice
+        wyb = int(input("Wybor: "))
+        if wyb in [1, 2, 3, 4]:
+            return wyb
         else:
             print("Nie ma takiej funkcji!")
-            return wybor_funkcji()
+            return funkcjaa()
     except ValueError:
         print("Blad wartosci!")
-        return wybor_funkcji()
+        return funkcjaa()
 
 
 def dokladnosc():
     try:
-        acc = float(input("Podaj dokladnosc: "))
-        return acc
+        eps = float(input("Podaj dokladnosc: "))
+        return eps
     except ValueError:
         print("Blad wartosci!")
         return dokladnosc()
 
 
+def metoda():
+    try:
+        met = int(input("Wybor: "))
+        if met in [1, 2]:
+            return met
+        else:
+            print("Nie ma takiej metody!")
+            return metoda()
+    except ValueError:
+        print("Blad wartosci!")
+        return metoda()
+
+
 def Gauss(funkcja, iloscWezlow):
     wynik = 0
     for i in range(iloscWezlow):
-        aktualnaWaga = PI / iloscWezlow
-        aktualnyWezel = -np.cos(((2 * i - 1) * PI) / (2 * iloscWezlow))
+        aktualnaWaga = math.pi / iloscWezlow
+        aktualnyWezel = -np.cos(((2 * i - 1) * math.pi) / (2 * iloscWezlow))
         wynik += aktualnaWaga * FX(funkcja, aktualnyWezel)
     return wynik
 
 
-# calka Simpsona
+# calka wedlug wzoru Simpsona
 def calka(funkcja, poczatek, koniec, eps):
     podprzedzial = 1
     delta = koniec - poczatek
     wynik = 0
-    while math.fabs(pom - wynik) > eps:
+    warunek = True
+    while warunek:
         podprzedzial = podprzedzial * 2
         dlugosc = delta / podprzedzial
         pom = wynik  # pom - zmienna pomocnicza
         wynik = 0
         wynik += FXWX(funkcja, poczatek) + FXWX(funkcja, koniec)
-        for i in range(podprzedzial / 2):
+        for i in range(int(podprzedzial / 2)):
             wynik += 4 * FXWX(funkcja, poczatek + (2 * i - 1) * dlugosc)
             wynik += 2 * FXWX(funkcja, poczatek + (2 * i) * dlugosc)
             i += 1
         wynik *= dlugosc / 3
+        if math.fabs(pom - wynik) > eps:
+            warunek = False
+        else:
+            warunek = True
+    return wynik
+
+
+# obliczamy granice w celu wyliczenia calki Newtona-Cotesa
+def granica(funkcja, eps):
+    wynik = 0
+
+    # granica do +1
+    poczatek = 0
+    koniec = 0.5
+    warunek = True
+    while warunek:
+        temp = calka(funkcja, poczatek, koniec, eps)
+        wynik += temp
+        poczatek = koniec
+        koniec = koniec + ((1 - koniec) * 1 / 2)
+        if math.fabs(temp) > eps:
+            warunek = False
+        else:
+            warunek = True
+
+    # granica do -1
+    poczatek = -0.5
+    koniec = 0
+    warunek = True
+    while warunek:
+        temp = calka(funkcja, poczatek, koniec, eps)
+        wynik += temp
+        koniec = poczatek
+        poczatek = poczatek - ((1 - math.fabs(koniec)) * 1 / 2)
+        if math.fabs(temp) > eps:
+            warunek = False
+        else:
+            warunek = True
+
     return wynik
 
 
@@ -80,31 +131,34 @@ def FXWX(funkcja, x):
     return FX(funkcja, x) * (1 / np.sqrt(1 - x ** 2))
 
 
-# wartosci funkcji z waga
-functions = {
-    1: lambda x: np.sin(x) * (1 / np.sqrt(1 - x ** 2)),
-    2: lambda x: (2.0 * x - 1) * (1 / np.sqrt(1 - x ** 2)),
-    3: lambda x: horner([1, 0, 3, 0, 1], x) * (1 / np.sqrt(1 - x ** 2)),
-    4: lambda x: np.cos(x) * (1 / np.sqrt(1 - x ** 2))
-}
-
-# wartosci funkcji
-raw_functions = {
-    1: lambda x: np.sin(x),
-    2: lambda x: (2.0 * x + 1),
-    3: lambda x: horner([1, 0, 3, 0, 1], x),
-    4: lambda x: np.cos(x)
-}
-
-
 def main():
     print("Wybierz funkcje z ponizszych \n"
           "[1]. f(x) = sin(x) \n"
           "[2]. f(x) = 2x + 1 \n"
           "[3]. f(x) = x^4 + 3x^2 + 1 \n"
           "[4]. f(x) = cos(x) \n")
-    fun = wybor_funkcji()
+    fun = funkcjaa()
     eps = dokladnosc()
+    # print("Wybierz metode \n"
+    #       "[1]. Newton-Cotes \n"
+    #       "[2]. Gauss-Czebyszew \n")
+    # met = metoda()
+    # if met == 1:
+    #     print("Wartosc dla Newtona-Cotesa: ")
+    #     print(granica(fun, eps))
+    # elif met == 2:
+    #     i = 2
+    #     while i != 6:
+    #         print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    #         print("Liczba wezlow: " + str(i))
+    #         print("Wartosc dla Gaussa-Czebyszewa: ")
+    #         print(Gauss(fun, i))
+    #         i += 1
+    # else:
+    #     print("Blad!")
+    # do sprawozdania by szybciej liczyc
+    print("Wartosc dla Newtona-Cotesa: ")
+    print(granica(fun, eps))
     i = 2
     while i != 6:
         print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
@@ -112,6 +166,8 @@ def main():
         print("Wartosc dla Gaussa-Czebyszewa: ")
         print(Gauss(fun, i))
         i += 1
+
+    return 0
 
 
 if __name__ == '__main__':
