@@ -14,7 +14,11 @@ def funkcjaa():
 def dokladnosc():
     try:
         eps = float(input("Podaj dokladnosc: "))
-        return eps
+        if eps > 0:
+            return eps
+        else:
+            print("Wartosc dokladnosci musi byc wieksza od 0!")
+            return dokladnosc()
     except ValueError:
         print("Blad wartosci!")
         return dokladnosc()
