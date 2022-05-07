@@ -12,6 +12,7 @@ def main():
           "[2]. f(x) = 2x + 1 \n"
           "[3]. f(x) = x^2 + x + 1\n"
           "[4]. f(x) = sin(2x + 1) \n")
+          # "[4]. f(x) = x^4 + 2x^3 - 2x^2 - x + 4 \n")
     fun = funkcjaa()
     print("Wybierz metode \n"
           "[1]. Newton-Cotes \n"

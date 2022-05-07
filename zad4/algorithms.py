@@ -2,6 +2,38 @@ import numpy as np
 import math
 from numpy import double
 
+przedzial = [-1, 1]
+
+
+def suma_I(n, funkcja):
+    poczatek = przedzial[0]
+    koniec = przedzial[1]
+    suma = 0
+    coil_ex = abs(poczatek - koniec) / n
+    for i in range(1, n):
+        x = poczatek + (coil_ex * i)
+        suma += FX(funkcja, x)
+    return suma
+
+
+def suma_T(n, funkcja):
+    poczatek = przedzial[0]
+    koniec = przedzial[1]
+    suma = 0
+    coil_e = abs(poczatek - koniec) / n
+    poczatek_T = poczatek - (coil_e / 2)
+    for i in range(1, n + 1):
+        x = poczatek_T + (coil_e * i)
+        suma += FX(funkcja, x)
+    return suma
+
+
+def newton_cotes(n, funkcja):
+    poczatek = przedzial[0]
+    koniec = przedzial[1]
+    return (koniec - poczatek) / (6 * n) * (FX(funkcja, poczatek) + FX(funkcja, koniec)
+                                            + (2 * suma_I(n, funkcja)) + (4 * suma_T(n, funkcja)))
+
 
 def horner(arr, x):
     result = arr[0]
@@ -63,6 +95,14 @@ def granica(funkcja, eps) -> double:
         else:
             warunek = False
 
+    # n = 1
+    # while True:
+    #     wynik_wczes = wynik
+    #     wynik = newton_cotes(n, funkcja)
+    #     if abs(wynik - wynik_wczes) <= eps:
+    #         break
+    #     n += 1
+
     # granica do -1
     poczatek = -0.5
     koniec = 0
@@ -76,6 +116,14 @@ def granica(funkcja, eps) -> double:
             warunek = True
         else:
             warunek = False
+
+    # while True:
+    #     wynik_wczes = wynik
+    #     wynik = newton_cotes(n, funkcja)
+    #     if abs(wynik - wynik_wczes) <= eps:
+    #         break
+    #     n += 1
+
     return wynik
 
 
@@ -86,7 +134,10 @@ def FX(funkcja, x) -> double:
         return 2.0 * x + 1
     elif funkcja == 3:
         return horner([1, 1, 1], x)
+    # elif funkcja == 4:
+    #     return np.sin(2 * x + 1)
     elif funkcja == 4:
+        # return horner([1, 2, -2, -1, 4], x)
         return np.sin(2 * x + 1)
 
 
