@@ -134,11 +134,8 @@ def FX(funkcja, x) -> double:
         return 2.0 * x + 1
     elif funkcja == 3:
         return horner([1, 1, 1], x)
-    # elif funkcja == 4:
-    #     return np.sin(2 * x + 1)
     elif funkcja == 4:
-        # return horner([1, 2, -2, -1, 4], x)
-        return np.sin(2 * x + 1)
+        return np.arcsin(x)
 
 
 def FXWX(funkcja, x) -> double:
