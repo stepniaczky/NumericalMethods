@@ -17,28 +17,29 @@ def main():
           "[1]. Newton-Cotes \n"
           "[2]. Gauss-Czebyszew \n")
     met = metoda()
-    # if met == 1:
-    eps = dokladnosc()
-    #     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    #     print("Wartosc dla Newtona-Cotesa: " + str(granica(fun, eps)))
-    # elif met == 2:
-    #     i = 2
-    #     while i != 6:
-    #         print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    #         print("Liczba wezlow: " + str(i))
-    #         print("Wartosc dla Gaussa-Czebyszewa: " + str(Gauss(fun, i)))
-    #         i += 1
-    # else:
-    #     print("Blad!")
-    # OBIE METODY OBLICZANE NA RAZ:
-    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    print("Wartosc dla Newtona-Cotesa: " + str(granica(fun, eps)))
-    i = 2
-    while i != 6:
+    if met == 1:
+        eps = dokladnosc()
         print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-        print("Liczba wezlow: " + str(i))
-        print("Wartosc dla Gaussa-Czebyszewa: " + str(Gauss(fun, i)))
-        i += 1
+        print("Wartosc dla Newtona-Cotesa: " + str(granica(fun, eps)))
+    elif met == 2:
+        i = 2
+        while i != 6:
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+            print("Liczba wezlow: " + str(i))
+            print("Wartosc dla Gaussa-Czebyszewa: " + str(Gauss(fun, i)))
+            i += 1
+    else:
+        print("Blad!")
+    # OBIE METODY OBLICZANE NA RAZ:
+    # eps = dokladnosc()
+    # print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    # print("Wartosc dla Newtona-Cotesa: " + str(granica(fun, eps)))
+    # i = 2
+    # while i != 6:
+    #     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    #     print("Liczba wezlow: " + str(i))
+    #     print("Wartosc dla Gaussa-Czebyszewa: " + str(Gauss(fun, i)))
+    #     i += 1
 
     return 0
 
