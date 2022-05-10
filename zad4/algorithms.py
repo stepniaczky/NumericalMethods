@@ -76,6 +76,7 @@ def granica(funkcja, eps) -> double:
             warunek = True
         else:
             warunek = False
+
     return wynik
 
 
@@ -87,7 +88,7 @@ def FX(funkcja, x) -> double:
     elif funkcja == 3:
         return horner([1, 1, 1], x)
     elif funkcja == 4:
-        return np.sin(2 * x + 1)
+        return np.arcsin(x)
 
 
 def FXWX(funkcja, x) -> double:

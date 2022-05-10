@@ -11,7 +11,7 @@ def main():
           "[1]. f(x) = sin(x) \n"
           "[2]. f(x) = 2x + 1 \n"
           "[3]. f(x) = x^2 + x + 1\n"
-          "[4]. f(x) = sin(2x + 1) \n")
+          "[4]. f(x) = arcsin(x) \n")
     fun = funkcjaa()
     print("Wybierz metode \n"
           "[1]. Newton-Cotes \n"
@@ -30,7 +30,8 @@ def main():
             i += 1
     else:
         print("Blad!")
-    # # OBIE METODY OBLICZANE NA RAZ:
+    # OBIE METODY OBLICZANE NA RAZ:
+    # eps = dokladnosc()
     # print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
     # print("Wartosc dla Newtona-Cotesa: " + str(granica(fun, eps)))
     # i = 2
