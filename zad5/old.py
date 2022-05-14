@@ -1,11 +1,6 @@
 import numpy as np
 from weights_coordinates import wc
 import math
-from scipy.misc import derivative
-
-
-def binomial_coefficient(n, k):
-    return fac(n) // fac(k) // fac(n - k)
 
 
 def horner(arr, x):
@@ -36,22 +31,12 @@ def gauss(f, nodes_number):
     return result
 
 
-def E(f, W, x):
+def actual_error(f, W, x):
     return f(x) - W(x)
 
 
-def a_i(n, x):
-    return (fac(n + 1) ** 2) / (laguerre_polynomial(n + 1, x) * laguerre_polynomial(n + 2, x))
-
-
-def laguerre_polynomial(k, x):
-    result = 0
-    for m in range(k + 1):
-        result += ((-1) ** m) * binomial_coefficient(k, m) * fac(m) * x ** (k - m)
-
-    return result
-
-
+def laguerre_polynomial(n, x):
+    return ((-1) ** n) * (math.e ** x) * gauss((math.e ** (-x)) * (x ** n))
 #
 #
 # def lam(f, quadrature_polynomial, polynomialDegree, weights, roots):
@@ -61,14 +46,17 @@ def laguerre_polynomial(k, x):
 #     return value / (fac(polynomialDegree) ** 2)
 
 
-def approximation(mode, f, condition, n, x):
+def a_i(n, x):
+    return (fac(n + 1) ** 2) / (laguerre_polynomial(n + 1, x) * laguerre_polynomial(n + 2, x))
+
+
+def approximation(mode, f, condition, n):
     coefficient = []
 
     if mode == 1:  # z okreslonym stopniem wielomianu
-        weights, roots = wc[n]
+        weights, roots = wc[condition]
         for i in range(condition + 1):
-            coefficient.append(a_i(i, x))
-        print(coefficient)
-        # return coefficient
+            coefficient.append(lam(f, n, i, weights, roots))
+        return coefficient
     else:  # z okreslonym bledem aproksymacji
         pass
