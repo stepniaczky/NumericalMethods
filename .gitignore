@@ -1,9 +1,13 @@
+# PyCharm IDE files
 **/.idea/
+
+# Python bytecode-compiled cache files
 **/__pycache__/
 
+# Output files
 **/*.jpg
 **/*.txt
 **/*.png
 
-# WYJATKI
+# Except equations files for Gauss elimination
 !zad2/equations/**
