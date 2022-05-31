@@ -13,7 +13,7 @@ def workflow():
     except ValueError:
         print("Wprowadzono niepoprawna wartosc!")
 
-        return workflow()
+    return workflow()
 
 
 def fun():
@@ -70,7 +70,7 @@ def nodes_number():
 
 def approximation_error():
     try:
-        choice = int(input("Oczekiwany blad aproksymacji: "))
+        choice = float(input("Oczekiwany blad aproksymacji: "))
         if choice > 0:
             return choice
         print("Wybrany blad musi byc wiekszy od 0!")

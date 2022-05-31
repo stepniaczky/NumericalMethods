@@ -1,11 +1,5 @@
 import numpy as np
-from weights_coordinates import wc
 import math
-from scipy.misc import derivative
-
-
-def binomial_coefficient(n, k):
-    return fac(n) // fac(k) // fac(n - k)
 
 
 def horner(arr, x):
@@ -15,60 +9,69 @@ def horner(arr, x):
     return result
 
 
-def fac(n):
+def binomial_coefficient(n, k):
+    return fac(n) // fac(k) // fac(n - k)
+
+
+def fac(x):
     result = 1
-    while n > 1:
-        result = result * n
-        n -= 1
-    return result
+    if x == 0:
+        return 1
+    else:
+        for i in range(1, x + 1):
+            result = result * i
+        return result
 
 
-def gauss(f, nodes_number):
-    result = 0
+def gauss(iloscWezlow) -> tuple:
+    weights = []
+    roots = []
     i = 1
-
-    while i <= nodes_number:
-        actual_weight = np.pi / nodes_number
-        actual_node = np.cos(((2 * i - 1) * np.pi) / (2 * nodes_number))
-        result += actual_weight * f(actual_node)
+    while i <= iloscWezlow:
+        aktualnaWaga = math.pi / iloscWezlow
+        aktualnyWezel = -np.cos(((2 * i - 1) * math.pi) / (2 * iloscWezlow))
+        weights.append(aktualnaWaga)
+        roots.append(aktualnyWezel)
         i += 1
-
-    return result
-
-
-def E(f, W, x):
-    return f(x) - W(x)
+    return weights, roots
 
 
-def a_i(n, x):
-    return (fac(n + 1) ** 2) / (laguerre_polynomial(n + 1, x) * laguerre_polynomial(n + 2, x))
+def laguerre(n):
+    weights = []
+    roots = []
+    r, w = np.polynomial.laguerre.laggauss(n)
+    weights.append(w)
+    roots.append(r)
+    return weights[0], roots[0]
 
 
-def laguerre_polynomial(k, x):
-    result = 0
-    for m in range(k + 1):
-        result += ((-1) ** m) * binomial_coefficient(k, m) * fac(m) * x ** (k - m)
-
-    return result
-
-
-#
-#
-# def lam(f, quadrature_polynomial, polynomialDegree, weights, roots):
-#     value = 0.0
-#     for i in range(0, quadrature_polynomial):
-#         value += f(roots[i]) * weights[i] * laguerre_polynomial(polynomialDegree, roots[i])
-#     return value / (fac(polynomialDegree) ** 2)
+def laguerre_polynomial(degree, x):
+    if degree == 0:
+        return 1
+    elif degree == 1:
+        return x - 1
+    else:
+        L = [1, x - 1]
+        for i in range(1, degree):
+            L.append(((x - (2 * i) - 1) * L[i]) - (i ** 2 * L[i - 1]))
+        return L[degree]
 
 
-def approximation(mode, f, condition, n, x):
-    coefficient = []
+def lam(f, quadrature, degree, weights, roots):
+    value = 0
+    for i in range(0, quadrature):
+        value += f(roots[i]) * weights[i] * laguerre_polynomial(degree, roots[i])
+    return value / (fac(degree) ** 2)
 
-    if mode == 1:  # z okreslonym stopniem wielomianu
-        weights, roots = wc[n]
-        for i in range(condition + 1):
-            coefficient.append(a_i(i, x))
-        print(coefficient)
-        # return coefficient
-    else:  # z okreslonym bledem aproksymacji
-        pass
+
+def error(roots, weights, f, coefficient, quadrature, degree):
+    err = 0
+    F = []
+    for k in range(quadrature):
+        F.append(0)
+    for j in range(quadrature):
+        for i in range(0, degree):
+            F[j] = F[j] + coefficient[i] * laguerre_polynomial(i, roots[j])
+    for i in range(quadrature):
+        err = err + weights[i] * ((f(roots[i]) - F[i]) ** 2)
+    return math.sqrt(err)
